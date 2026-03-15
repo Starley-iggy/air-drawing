@@ -145,29 +145,25 @@ Handlandmarks zichtbaar voor gebruikersfeedback
 
 ## 6. Teststrategie
 
-Testtype
+| Testtype                       | Beschrijving                                        |
+|-------------------------------|-----------------------------------------------|
+| **Unit tests**              | Test individuele functies zoals lijntekenen, kleurselectie.|
+| **Integratietests**     | Test volledige loop: webcam → handdetectie → canvas overlay. |
+| **Performance tests**    | Meet FPS en latency bij verschillende belichting en achtergrond.|
+| **User Acceptance**       | 	Feedback van primaire doelgroep over gebruiksgemak en intuïtiviteit.                 |
 
-Beschrijving
-
-**Unit tests**	Test individuele functies zoals lijntekenen, kleurselectie.
-
-**Integratietests**	Test volledige loop: webcam → handdetectie → canvas overlay.
-
-**Performance tests**	Meet FPS en latency bij verschillende belichting en achtergrond.
-
-**User Acceptance**	Feedback van primaire doelgroep over gebruiksgemak en intuïtiviteit.
 
 ## 7. Mogelijke uitbreidingen
 
-Opslaan van tekeningen als .png
+- Opslaan van tekeningen als .png
 
-Meerdere brushes en diktes
+- Meerdere brushes en diktes
 
-GUI knoppen in plaats van zones
+- GUI knoppen in plaats van zones
 
-Multi-hand tracking
+- Multi-hand tracking
 
-Gesture control voor extra functies
+- Gesture control voor extra functies
 
 ## 8. Conclusie
 

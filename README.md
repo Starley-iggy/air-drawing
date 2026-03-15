@@ -1,59 +1,96 @@
-Air Drawing – Software Life Cycle Document (SLDC)
-1. Projectoverzicht
+# Air Drawing – Software Life Cycle Document (SLDC)
 
-Naam: Air Drawing
-Repository: Starley‑iggy/air-drawing
+**Naam:** Air Drawing  
+**Repository:** [Starley-iggy/air-drawing](https://github.com/Starley-iggy/air-drawing)  
+**Taal:** Python  
 
-Taal: Python
-Doel:
-Air Drawing is een interactieve applicatie die realtime handtracking gebruikt om gebruikers toe te staan tekenen in de lucht met hun wijsvinger. Het systeem herkent de handbewegingen via een webcam en vertaalt deze naar lijnen op het scherm.
+## Doel
+Air Drawing is een interactieve applicatie die gebruikers in staat stelt te tekenen in de lucht met hun hand, via een webcam en realtime handtracking. Het systeem detecteert de hand en vertaalt bewegingen van de wijsvinger naar lijnen op een digitaal canvas.
 
-Belangrijkste kenmerken:
+## Scope
 
-Realtime handtracking met Mediapipe
+**Inclusief:**  
+- Realtime tekenen  
+- Kleurselectie  
+- Canvas wissen  
+- Handtracking via Mediapipe  
 
-Interactieve tekenfunctie via wijsvinger
+**Exclusief:**  
+- Opslaan van tekeningen  
+- Meerdere brush types  
+- Multi-hand tracking (voor toekomstige uitbreiding)  
 
-Dynamische kleurselectie en canvas‑clearing
+## Doelgroep / Stakeholders
 
-Volledig Python‑based, geen externe GUI frameworks nodig
+**Primair:** hobbyisten, studenten en makers die experimenteren met computer vision en interactieve projecten.  
 
-2. Functioneel Ontwerp (Wat doet het systeem?)
-2.1 Hoofdfunctionaliteiten
-Functionaliteit	Beschrijving
-Handdetectie	Detecteert handlandmarks (vingertoppen, gewrichten) via webcam.
-Tekenmodus	Teken alleen wanneer de indexvinger boven de middelvinger is.
-Kleurselectie	Bovenaan scherm: vier zones (Blue, Green, Red, Clear).
-Wis canvas	Knop Clear wist het volledige tekenoppervlak.
-Realtime visualisatie	Canvas en webcamfeed worden samengevoegd en realtime weergegeven.
-2.2 Use Case Diagram
-Diagram is not supported.
+**Secundair:** docenten, demonstraties in educatieve context, creatieve prototypes.  
 
-Beschrijving Use Cases:
+---
 
-Detect Hand: Applicatie herkent hand in beeld.
+## 2. Projectdoelstellingen
 
-Select Color: Gebruiker beweegt wijsvinger naar kleurzone.
+| Doelstelling             | Beschrijving                                                        |
+|---------------------------|-------------------------------------------------------------------|
+| Realtime handtracking     | Detecteer handlandmarks en volg de indexvinger nauwkeurig.        |
+| Intuïtief tekenen         | Gebruiker kan eenvoudig tekenen door de lucht te bewegen.         |
+| Interactie via UI-zones   | Kleuren en canvas wissen via handbewegingen.                      |
+| Responsief en lichtgewicht| Laag latency, minimale vertraging bij tekenbewegingen.            |
+| Eenvoudige uitbreidbaarheid | Ondersteuning voor extra features in toekomst (brushes, opslaan). |
 
-Draw on Canvas: Bewegingsdata van indexvinger wordt vertaald naar lijnen op canvas.
+---
 
-Clear Canvas: Canvas wordt geleegd bij aanraking van Clear zone.
+## 3. Functioneel Ontwerp
 
-3. Technisch Ontwerp (Hoe werkt het systeem?)
-3.1 Architectuur
-Webcam → Beeldverwerking → Handdetectie → Tekenlogica → UI feedback → Output
+### 3.1 Hoofdfunctionaliteiten
 
-Modules & verantwoordelijkheden:
+| Functionaliteit           | Beschrijving                                                      |
+|---------------------------|-------------------------------------------------------------------|
+| Handdetectie               | Detecteert handlandmarks via Mediapipe.                           |
+| Tekenmodus                 | Teken alleen als indexvinger boven middelvinger is.               |
+| Kleurselectie              | Bovenaan scherm: vier zones (Blue, Green, Red, Clear).            |
+| Wis canvas                 | Wis het volledige canvas bij aanraking van Clear zone.            |
+| Realtime visualisatie      | Canvas en webcamfeed worden samengevoegd en realtime weergegeven.|
 
-Module	Functie
-cv2.VideoCapture	Start webcam en leest frames.
-mediapipe.solutions.hands.Hands	Detecteert handlandmarks.
-mp.solutions.drawing_utils	Teken landmarks voor debug/feedback.
-Canvas (numpy array)	Slaat lijnen en tekendata op.
-UI zones	Detecteert kleur- of wisselecties.
-Main loop	Realtime frameverwerking en rendering.
-3.2 Dataflow
-3.3 Pseudocode
+### 3.2 Use Case Diagram
+*(Diagram is niet ondersteund in Markdown)*
+
+**Use Cases:**  
+1. **Detect Hand** – Applicatie herkent de hand in beeld.  
+2. **Select Color** – Gebruiker beweegt wijsvinger naar gewenste kleurzone.  
+3. **Draw on Canvas** – Beweging van de wijsvinger wordt vertaald naar lijnen.  
+4. **Clear Canvas** – Wis functie via Clear zone.  
+
+### 3.3 Niet-functionele eisen
+
+| Eisen         | Beschrijving                                                   |
+|---------------|---------------------------------------------------------------|
+| Performance   | Minimaal 15–30 FPS voor vloeiende realtime ervaring.          |
+| Compatibiliteit | Python 3.7+, OpenCV en Mediapipe geïnstalleerd.            |
+| Usability     | Eenvoudige interface met duidelijke zones voor kleuren/wissen.|
+| Stabiliteit   | Foutafhandeling bij afwezigheid van hand of slechte belichting.|
+
+---
+
+## 4. Technisch Ontwerp
+
+### 4.1 Architectuur
+*(High-level overzicht van modules & datastromen)*
+
+### 4.2 Modules & Verantwoordelijkheden
+
+| Module                        | Functie                                        |
+|-------------------------------|-----------------------------------------------|
+| cv2.VideoCapture              | Leest webcam frames.                           |
+| mediapipe.solutions.hands     | Detecteert handlandmarks.                     |
+| mp.solutions.drawing_utils    | Teken handlandmarks op frame.                 |
+| Canvas (numpy array)          | Slaat lijnen en tekendata op.                 |
+| UI zones                       | Detecteert kleur- of wisselecties.            |
+| Main loop                      | Verwerkt frames, detecteert hand, tekent, combineert en toont output.|
+
+### 4.3 Pseudocode
+
+```python
 start webcam
 initialize mediapipe hands
 initialize empty canvas
@@ -72,45 +109,3 @@ while webcam active:
     overlay canvas on frame
     show frame in fullscreen
     if ESC pressed: break
-4. Scherm & Gebruikersinterface
-
-Canvas & UI:
-
-Horizontale balk bovenaan met 4 zones: Blue | Green | Red | Clear
-
-Kleur verandert wanneer wijsvinger in een zone komt
-
-Canvas overlay op live webcamfeed
-
-Handlandmarks zichtbaar voor realtime feedback
-
-Voorbeeld Mockup:
-
-+--------------------------------------+
-| Blue | Green | Red | Clear           |  <- UI Zones
-+--------------------------------------+
-|                                      |
-|          [Canvas + Webcam]           |
-|                                      |
-+--------------------------------------+
-5. Technische Specificaties
-Aspect	Detail
-Taal	Python 3.7+
-Libraries	OpenCV, Mediapipe, Numpy
-Systeemvereisten	Webcam, CPU voor realtime tracking
-Optimalisatie	Goed verlichte omgeving voor nauwkeurige handdetectie
-6. Mogelijke Verbeteringen
-
-Meerdere brushes & diktes
-
-Opslaan van tekeningen als .png
-
-GUI knoppen in plaats van zones
-
-Gesture controls voor extra functies
-
-Multi-hand tracking voor meerdere gebruikers
-
-7. Conclusie
-
-Air Drawing is een compacte, interactieve Python-app die computer vision gebruikt voor realtime handtracking en tekenen in de lucht. Het project combineert eenvoudige UI‑zones met een responsieve tekenlogica, waardoor het geschikt is voor educatieve projecten, prototypes en creatieve experimenten.

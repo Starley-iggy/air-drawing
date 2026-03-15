@@ -110,3 +110,56 @@ while webcam active:
     overlay canvas on frame
     show frame in fullscreen
     if ESC pressed: break
+```
+
+
+## 5. Gebruikersinterface
+
+Canvas & UI Zones:
+
+Horizontale balk bovenaan met zones: Blue | Green | Red | Clear
+
+Gebruiker kiest kleur door wijsvinger in zone te bewegen
+
+Canvas overlay op webcam feed voor realtime feedback
+
+Handlandmarks zichtbaar voor gebruikersfeedback
+
+Mockup:
+
++--------------------------------------+
+| Blue | Green | Red | Clear           |  <- UI Zones
++--------------------------------------+
+|                                      |
+|          [Canvas + Webcam]           |
+|                                      |
++--------------------------------------+
+## 6. Teststrategie
+
+Testtype
+
+Beschrijving
+
+**Unit tests**	Test individuele functies zoals lijntekenen, kleurselectie.
+
+**Integratietests**	Test volledige loop: webcam → handdetectie → canvas overlay.
+
+**Performance tests**	Meet FPS en latency bij verschillende belichting en achtergrond.
+
+**User Acceptance**	Feedback van primaire doelgroep over gebruiksgemak en intuïtiviteit.
+
+## 7. Mogelijke uitbreidingen
+
+Opslaan van tekeningen als .png
+
+Meerdere brushes en diktes
+
+GUI knoppen in plaats van zones
+
+Multi-hand tracking
+
+Gesture control voor extra functies
+
+## 8. Conclusie
+
+Air Drawing combineert handtracking, realtime beeldverwerking en interactieve UI tot een lichtgewicht Python-app. Het biedt een intuïtieve en creatieve ervaring voor gebruikers die willen tekenen in de lucht en vormt een solide basis voor toekomstige uitbreidingen.

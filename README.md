@@ -138,8 +138,6 @@ Mockup:
 ╚══════════════════════════════════════╝
 ```
 
-![Starley Drawing](/mnt/data/d538b5f5-a1b2-4cc7-92cb-cad7ad3e1700.png "Starley Screenshot")
-
 
 ## 6. Teststrategie
 

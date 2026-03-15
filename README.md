@@ -125,7 +125,7 @@ Canvas overlay op webcam feed voor realtime feedback
 
 Handlandmarks zichtbaar voor gebruikersfeedback
 
-Mockup:
+### Mockup:
 ```
 ╔══════════════════════════════════════╗
 ║ Blue │ Green │ Red │ Clear           ║
@@ -137,6 +137,9 @@ Mockup:
 ║                                      ║
 ╚══════════════════════════════════════╝
 ```
+### Demo
+
+![Air Drawing](airdrawing.png)
 
 
 ## 6. Teststrategie

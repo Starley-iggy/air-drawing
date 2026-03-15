@@ -137,7 +137,7 @@ Handlandmarks zichtbaar voor gebruikersfeedback
 ║                                      ║
 ╚══════════════════════════════════════╝
 ```
-### Screenshot van Air Drawing interface met mijn naam
+### Screenshot van Air Drawing interface 
 
 ![Air Drawing](airdrawing1.png)
 ![Air Drawing](airdrawing.png)

@@ -129,7 +129,9 @@ Air Drawing is een interactieve applicatie die gebruikers in staat stelt te teke
 |   Overlay Drawing → Combine with Webcam Feed → Render to Screen        |
 +------------------------------------------------------------------------------+
 ```
-*(High-level overzicht van modules & datastromen)*
+*(High-level overzicht van modules & datastromen)* 
+
+*(Prototype)*
 
 **Modulebeschrijving**
 | Module                | Verantwoordelijkheid                                                          |
@@ -144,27 +146,28 @@ Air Drawing is een interactieve applicatie die gebruikers in staat stelt te teke
 
 **Datastromen**
 
-Webcam → Frame Processor
 
-Frames worden ingelezen → gespiegeld → doorgestuurd naar handtracking.
+1. ***Webcam → Frame Processor***
 
-Hand Detection → Gesture Evaluator
+-      Frames worden ingelezen → gespiegeld → doorgestuurd naar handtracking.
 
-Handlandmarks worden geëxtraheerd → positie wijsvinger vergeleken met zones.
+2. ***Hand Detection → Gesture Evaluator***
 
-Gesture → Draw Controller
+  -     Handlandmarks worden geëxtraheerd → positie wijsvinger vergeleken met zones.
 
-Indien “tekenen”: voeg lijnelement toe aan canvas met huidige kleur.
+3. ***Gesture → Draw Controller***
 
-Indien in “Clear”-zone: reset canvas buffer.
+-     Indien “tekenen”: voeg lijnelement toe aan canvas met huidige kleur.
 
-Canvas + Webcam → Renderer
+-      Indien in “Clear”-zone: reset canvas buffer.
 
-Canvas (met getekende lijnen) wordt over webcamfeed gelegd → weergave.
+4. ***Canvas + Webcam → Renderer***
 
-UI Zones → Colour State
+-      Canvas (met getekende lijnen) wordt over webcamfeed gelegd → weergave.
 
-Detecteren selecties in bovenste balk → update tekenkleur.
+5. ***UI Zones → Colour State***
+
+-      Detecteren selecties in bovenste balk → update tekenkleur.
 
 ### 4.2 Modules & Verantwoordelijkheden
 

@@ -54,7 +54,39 @@ Air Drawing is een interactieve applicatie die gebruikers in staat stelt te teke
 | Realtime visualisatie      | Canvas en webcamfeed worden samengevoegd en realtime weergegeven.|
 
 ### 3.2 Use Case Diagram
-*(Diagram is niet ondersteund in Markdown)*
+```
+                       +---------------------+
+                       |    User (Actor)     |
+                       +---------------------+
+                                 |
+  +-----------------------------------------------------------+
+  |                        Air Drawing App                     |
+  |                                                           |
+  |   [UC1] Detect Hand          [UC2] Select Color            |
+  |        +-----------------------------+                     |
+  |        | capture webcam frames       |                     |
+  |        | run hand‑tracking module     |                     |
+  |        +-----------------------------+                     |
+  |                         |                                  |
+  |                    detects hand                             |
+  |                         |                                  |
+  |       +------------------------+   +---------------------+  |
+  |       | [UC3] Draw On Canvas   |   | [UC4] Clear Canvas  |  |
+  |       | record finger motion   |   | clear canvas buffer |  |
+  |       +------------------------+   +---------------------+  |
+  +-----------------------------------------------------------+
+                                  |
+                              Display to Screen
+```
+*(Prototype)*
+
+**Beschrijving Use Cases**
+| Use Case           | Kort overzicht                                              |
+| ------------------ | ----------------------------------------------------------- |
+| **Detect Hand**    | Detecteert de hand + positie van wijsvinger met Mediapipe.  |
+| **Select Color**   | Gebruiker kiest kleur door naar kleurzone te bewegen.       |
+| **Draw on Canvas** | Zet beweging van wijsvinger om in lijnen op canvas.         |
+| **Clear Canvas**   | Wisst alle getekende lijnen bij aanraking van “Clear” zone. |
 
 **Use Cases:**  
 1. **Detect Hand** – Applicatie herkent de hand in beeld.  
@@ -76,7 +108,63 @@ Air Drawing is een interactieve applicatie die gebruikers in staat stelt te teke
 ## 4. Technisch Ontwerp
 
 ### 4.1 Architectuur
+```
++------------------------------------------------------------------------------+
+|                              Air Drawing App                                 |
+|                                                                              |
+|   +----------------+       +----------------------+    +----------------+   |
+|   |  Webcam Input  | -->   |   Frame Processor    |    |   UI Overlay   |   |
+|   | (cv2.VideoCap) |       | (OpenCV + Mediapipe) |    | (Zones & HUD)  |   |
+|   +----------------+       +----------------------+    +----------------+   |
+|             |                      |                          |             |
+|             v                      v                          v             |
+|     Raw Frames → Hand Detection → Gestures/Positions → UI Interactions     |
+|                                                                              |
+|   +------------------+           +----------------+           +-----------+ |
+|   |  Canvas Buffer   | <-------- | Draw Controller | <--------| User Gestures |
+|   | (numpy array)    |           | (Logic)         |          | (Index finger)|
+|   +------------------+           +----------------+           +-----------+ |
+|             |                                                        |
+|             v                                                        |
+|   Overlay Drawing → Combine with Webcam Feed → Render to Screen        |
++------------------------------------------------------------------------------+
+```
 *(High-level overzicht van modules & datastromen)*
+
+**Modulebeschrijving**
+| Module                | Verantwoordelijkheid                                                          |
+| --------------------- | ----------------------------------------------------------------------------- |
+| **Webcam Input**      | Captures video frames via OpenCV (`cv2.VideoCapture`).                        |
+| **Frame Processor**   | Verwerkt elk frame: flip for mirror, detecteert handlandmarks met Mediapipe.  |
+| **Gesture Evaluator** | Analyseert vingers (index boven middelvinger ⇒ tekenen).                      |
+| **Draw Controller**   | Beslist wat er getekend wordt en welke kleur gebruikt wordt.                  |
+| **Canvas Buffer**     | Behoudt getekende lijnen als een `numpy`‑image array.                         |
+| **UI Overlay**        | Detecteert kleurzones & wis‑actie en toont deze zones getekend bovenop beeld. |
+| **Renderer**          | Combineert webcambeeld + canvas + UI → output naar scherm.                    |
+
+**Datastromen**
+
+Webcam → Frame Processor
+
+Frames worden ingelezen → gespiegeld → doorgestuurd naar handtracking.
+
+Hand Detection → Gesture Evaluator
+
+Handlandmarks worden geëxtraheerd → positie wijsvinger vergeleken met zones.
+
+Gesture → Draw Controller
+
+Indien “tekenen”: voeg lijnelement toe aan canvas met huidige kleur.
+
+Indien in “Clear”-zone: reset canvas buffer.
+
+Canvas + Webcam → Renderer
+
+Canvas (met getekende lijnen) wordt over webcamfeed gelegd → weergave.
+
+UI Zones → Colour State
+
+Detecteren selecties in bovenste balk → update tekenkleur.
 
 ### 4.2 Modules & Verantwoordelijkheden
 

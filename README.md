@@ -109,25 +109,60 @@ Air Drawing is een interactieve applicatie die gebruikers in staat stelt te teke
 
 ### 4.1 Architectuur
 ```
-+------------------------------------------------------------------------------+
-|                              Air Drawing App                                 |
-|                                                                              |
-|   +----------------+       +----------------------+    +----------------+   |
-|   |  Webcam Input  | -->   |   Frame Processor    |    |   UI Overlay   |   |
-|   | (cv2.VideoCap) |       | (OpenCV + Mediapipe) |    | (Zones & HUD)  |   |
-|   +----------------+       +----------------------+    +----------------+   |
-|             |                      |                          |             |
-|             v                      v                          v             |
-|     Raw Frames → Hand Detection → Gestures/Positions → UI Interactions     |
-|                                                                              |
-|   +------------------+           +----------------+           +-----------+ |
-|   |  Canvas Buffer   | <-------- | Draw Controller | <--------| User Gestures |
-|   | (numpy array)    |           | (Logic)         |          | (Index finger)|
-|   +------------------+           +----------------+           +-----------+ |
-|             |                                                        |
-|             v                                                        |
-|   Overlay Drawing → Combine with Webcam Feed → Render to Screen        |
-+------------------------------------------------------------------------------+
++----------------------------------------------------------------------------------+
+|                                Air Drawing App                                   |
+|                                                                                  |
+|  INPUT LAYER                                                                     |
+|  +------------------+                                                            |
+|  | Camera Service   |                                                            |
+|  | (cv2 wrapper)    |                                                            |
+|  +--------+---------+                                                            |
+|           |                                                                      |
+|           v                                                                      |
+|  PERCEPTION LAYER                                                                |
+|  +------------------------+      +---------------------------+                   |
+|  | Hand Tracking Service  | ---> | Gesture Recognition       |                   |
+|  | (MediaPipe Adapter)    |      | (Stateful + ML optional)  |                   |
+|  +-----------+------------+      +-------------+-------------+                   |
+|              |                                 |                                 |
+|              v                                 v                                 |
+|  INTERACTION LAYER                                                               |
+|  +-------------------------------------------------------------+                 |
+|  | Interaction Engine (Core Brain)                              |                |
+|  | - Gesture → Intent Mapping                                   |                |
+|  | - State Machine (DRAW, ERASE, IDLE, UI)                      |                |
+|  | - Smoothing / Filtering                                      |                |
+|  | - Debounce / Confidence Handling                             |                |
+|  +----------------------+--------------------------------------+                 |
+|                         |                                                        |
+|         +---------------+---------------+                                        |
+|         |                               |                                        |
+|         v                               v                                        |
+|  DRAWING DOMAIN                   UI DOMAIN                                      |
+|  +------------------+            +------------------------+                      |
+|  | Draw Controller  |            | UI Controller          |                      |
+|  | - Stroke logic   |            | - Buttons / Zones      |                      |
+|  | - Brush engine   |            | - Tool selection       |                      |
+|  +--------+---------+            +-----------+------------+                      |
+|           |                                  |                                   |
+|           v                                  v                                   |
+|  +------------------+            +------------------------+                      |
+|  | Canvas Engine    |            | HUD Renderer           |                      |
+|  | (Layered buffer) |            | (Overlay system)       |                      |
+|  +--------+---------+            +-----------+------------+                      |
+|           |                                  |                                   |
+|           +---------------+------------------+                                   |
+|                           v                                                      |
+|                   RENDERING PIPELINE                                             |
+|                   +--------------------------+                                   |
+|                   | Frame Composer           |                                   |
+|                   | - Blend webcam + canvas  |                                   |
+|                   | - Z-order layers         |                                   |
+|                   +------------+-------------+                                   |
+|                                |                                                 |
+|                                v                                                 |
+|                        Display / Output                                          |
++----------------------------------------------------------------------------------+
 ```
 *(High-level overzicht van modules & datastromen)* 
 

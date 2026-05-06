@@ -63,12 +63,10 @@ Edge case: geen webcam → foutmelding
 Stap: steek hand voor camera
 
 Expected: 
-
 Hand landmarks worden herkend
 Cursor volgt vinger
 
 Variatie:
-
 Slechte lighting → nog steeds detectie?
 
 

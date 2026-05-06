@@ -5,6 +5,8 @@
 **Taal:** Python  
 **Maker:** Starley Igbinomwhaia Briggs
 
+[![Testing Guide](https://img.shields.io/badge/docs-testing-blue)](./Testing.md)
+
 ## Doel
 Air Drawing is een interactieve applicatie die gebruikers in staat stelt te tekenen in de lucht met hun hand, via een webcam en realtime handtracking. Het systeem detecteert de hand en vertaalt bewegingen van de wijsvinger naar lijnen op een digitaal canvas.
 

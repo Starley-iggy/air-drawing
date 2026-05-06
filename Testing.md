@@ -12,29 +12,34 @@ Valideren dat handtracking en drawing functionaliteit correct, stabiel en perfor
 Scope
 
 ✔ Hand detectie
+
 ✔ Gesture herkenning
+
 ✔ Drawing functionaliteit
+
 ✔ UI interactie
+
 ✔ Performance
 
 Out of scope
 
 ❌ Hardware defects (webcam zelf)
+
 ❌ OS-level camera drivers
 
 ## 🧪 Testaanpak
 
-Type test	Methode
+- Type test	Methode
 
-Functioneel	Manual + scripted tests
+- Functioneel	Manual + scripted tests
 
-Performance	Monitoring tools
+- Performance	Monitoring tools
 
-Unit tests	pytest
+- Unit tests	pytest
 
-Integratie tests	Mock camera input
+- Integratie tests	Mock camera input
 
-Exploratory testing	Hand gestures live
+- Exploratory testing	Hand gestures live
 
 ## 📋 Testcases 
 ### Basis functionaliteit (core features)

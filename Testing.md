@@ -1,4 +1,6 @@
 # Test Rapport & Testplan  Air Drawing
+<img width="1536" height="375" alt="image" src="https://github.com/user-attachments/assets/03ea730d-4450-4736-b629-8cc381414919" />
+
  ## 📌 Project Overzicht
 
 **Project:** Air Drawing
@@ -241,3 +243,6 @@ Geslaagd	17
 Gefaald	3
 
 Success rate	85%
+<img width="1536" height="132" alt="image" src="https://github.com/user-attachments/assets/8e0da5c7-001c-4af6-8819-9a4ea9c58104" />
+
+

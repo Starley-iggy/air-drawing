@@ -1,4 +1,6 @@
 # Air Drawing – Software Life Cycle Document (SLDC)
+<img width="1536" height="543" alt="image" src="https://github.com/user-attachments/assets/06e29469-6a6a-4892-bb7c-8405a24bf9f3" />
+
 
 **Naam:** Air Drawing  
 **Repository:** [Starley-iggy/air-drawing](https://github.com/Starley-iggy/air-drawing)  
@@ -296,3 +298,6 @@ Handlandmarks zichtbaar voor gebruikersfeedback
 ## 8. Conclusie
 
 Air Drawing combineert handtracking, realtime beeldverwerking en interactieve UI tot een lichtgewicht Python-app. Het biedt een intuïtieve en creatieve ervaring voor gebruikers die willen tekenen in de lucht en vormt een solide basis voor toekomstige uitbreidingen.
+<img width="1536" height="266" alt="image" src="https://github.com/user-attachments/assets/c3811342-feb9-4064-8781-ee8612413152" />
+
+
